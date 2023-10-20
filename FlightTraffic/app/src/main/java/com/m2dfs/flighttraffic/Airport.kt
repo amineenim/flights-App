@@ -27,4 +27,8 @@ data class Airport(
     fun getFormattedName(): String {
         return "$code $city ($country)"
     }
+
+    override fun toString(): String {
+        return getFormattedName()
+    }
 }

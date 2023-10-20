@@ -60,29 +60,27 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="Flights Traffic"
+        android:text="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="26sp"
         android:textStyle="bold|italic"
         android:typeface="serif"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="152dp"
+        android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Rechercher votre vol"
+        android:text="@string/rechercher_vol"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.546"
-        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Switch
@@ -104,43 +102,42 @@
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewDateTo"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/flight" />
 
-    <EditText
-        android:id="@+id/editTextDate2"
+    <TextView
+        android:id="@+id/TextViewDateFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="date"
+        android:text="01/01/2023"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/airportSpinner" />
 
-    <EditText
-        android:id="@+id/editTextDate"
+    <TextView
+        android:id="@+id/TextViewDateTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="date"
+        android:text="01/01/2023"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/TextViewDateFrom" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="De"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextDate2"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDate2"
-        app:layout_constraintTop_toTopOf="@+id/editTextDate2" />
+        android:text="@string/de"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewDateFrom"
+        app:layout_constraintEnd_toStartOf="@+id/TextViewDateFrom"
+        app:layout_constraintTop_toTopOf="@+id/TextViewDateFrom" />
 
     <TextView
         android:id="@+id/textView6"
@@ -148,9 +145,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:text="A"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDate"
-        app:layout_constraintTop_toTopOf="@+id/editTextDate" />
+        android:text="@string/a"
+        app:layout_constraintEnd_toStartOf="@+id/TextViewDateTo"
+        app:layout_constraintTop_toTopOf="@+id/TextViewDateTo" />
+
+    <Spinner
+        android:id="@+id/airportSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
