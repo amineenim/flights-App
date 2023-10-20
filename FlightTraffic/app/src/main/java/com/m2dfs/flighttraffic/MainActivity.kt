@@ -5,13 +5,15 @@ import android.app.DatePickerDialog.OnDateSetListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
+import android.widget.Switch
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var flightViewModel: FlightViewModel
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var fromDateTextView: TextView
     private lateinit var toDateTextView: TextView
 
@@ -19,42 +21,46 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        flightViewModel = ViewModelProvider(this).get(FlightViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         fromDateTextView = findViewById<TextView>(R.id.TextViewDateFrom)
         toDateTextView = findViewById<TextView>(R.id.TextViewDateTo)
-        fromDateTextView.setOnClickListener { showDatePickerDialog(FlightViewModel.DateType.FROM) }
-        toDateTextView.setOnClickListener { showDatePickerDialog(FlightViewModel.DateType.TO) }
+        var submitButton = findViewById<Button>(R.id.buttonSubmit)
 
-        flightViewModel.getFromCalendarLiveData().observe(this) {
+        fromDateTextView.setOnClickListener { showDatePickerDialog(MainViewModel.DateType.FROM) }
+        toDateTextView.setOnClickListener { showDatePickerDialog(MainViewModel.DateType.TO) }
+        submitButton.setOnClickListener { submitForm() }
+
+
+        mainViewModel.getFromCalendarLiveData().observe(this) {
             fromDateTextView.text = Utils.dateToString(it.time)
         }
 
-        flightViewModel.getToCalendarLiveData().observe(this) {
+        mainViewModel.getToCalendarLiveData().observe(this) {
             toDateTextView.text = Utils.dateToString(it.time)
         }
 
         //Liste aéroports
         val spinner = findViewById<Spinner>(R.id.airportSpinner)
-        flightViewModel.getAirportLiveData().observe(this) {
+        mainViewModel.getAirportLiveData().observe(this) {
             spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
         }
 
         //Exemple requête
-        flightViewModel.doRequest("https://opensky-network.org/api/flights/arrival?airport=LFPO&begin=1572172110&end=1572258510")
+        //mainViewModel.doRequest(false, 0)
     }
 
-    private fun showDatePickerDialog(dateType: FlightViewModel.DateType) {
+    private fun showDatePickerDialog(dateType: MainViewModel.DateType) {
         val dateSetListener = OnDateSetListener { view, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.YEAR, year)
                 set(Calendar.MONTH, month)
                 set(Calendar.DAY_OF_MONTH, dayOfMonth)
             }
-            flightViewModel.updateCalendarLiveData(dateType, calendar)
+            mainViewModel.updateCalendarLiveData(dateType, calendar)
         }
 
-        val currentCalendar = if (dateType == FlightViewModel.DateType.FROM) flightViewModel.getFromCalendarLiveData().value else flightViewModel.getToCalendarLiveData().value
+        val currentCalendar = if (dateType == MainViewModel.DateType.FROM) mainViewModel.getFromCalendarLiveData().value else mainViewModel.getToCalendarLiveData().value
 
         currentCalendar?.let { calendar ->
             val datePickerDialog = DatePickerDialog(
@@ -66,5 +72,11 @@ class MainActivity : AppCompatActivity() {
                 )
             datePickerDialog.show()
         }
+    }
+
+    private fun submitForm() {
+        val isArrival = findViewById<Switch>(R.id.switch1).isChecked
+        val airportIndex = findViewById<Spinner>(R.id.airportSpinner).selectedItemPosition
+        mainViewModel.doRequest(isArrival, airportIndex)
     }
 }

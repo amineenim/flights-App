@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 
-class FlightViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val fromCalendarLiveData = MutableLiveData(Calendar.getInstance())
     private val toCalendarLiveData = MutableLiveData(Calendar.getInstance())
@@ -37,13 +37,19 @@ class FlightViewModel : ViewModel() {
         else toCalendarLiveData.value = calendar
     }
 
-    fun doRequest(url: String) {
+    fun doRequest(isArrival: Boolean, selectedAirportIndex: Int) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
-                RequestManager.getSuspended(url, HashMap())
+                val url = if (isArrival) RequestManager.FLIGHT_ARRIVAL_ENDPOINT else RequestManager.FLIGHT_DEPARTURE_ENDPOINT
+                val params = HashMap<String, String>().apply {
+                    put("airport", airportList.value!![selectedAirportIndex].icao)
+                    put("begin", (fromCalendarLiveData.value!!.timeInMillis / 1000).toString())
+                    put("end", (toCalendarLiveData.value!!.timeInMillis / 1000).toString())
+                }
+                RequestManager.getSuspended(url, params)
             }
-            if (result != null) {
-                Log.d("doRequest", result)
+            result?.let {
+                Log.i("doRequest", result)
             }
         }
     }
