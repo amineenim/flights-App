@@ -24,7 +24,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toEndOf="@+id/switch1"
         app:layout_constraintTop_toTopOf="@+id/switch1"
-        tools:srcCompat="@drawable/arrival" />
+        app:srcCompat="@drawable/arrival" />
 
     <ImageView
         android:id="@+id/imageView"
