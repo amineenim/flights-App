@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/de"
+        android:text="@string/du"
         app:layout_constraintBottom_toBottomOf="@+id/TextViewDateFrom"
         app:layout_constraintEnd_toStartOf="@+id/TextViewDateFrom"
         app:layout_constraintTop_toTopOf="@+id/TextViewDateFrom" />
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/a"
+        android:text="@string/au"
         app:layout_constraintEnd_toStartOf="@+id/TextViewDateTo"
         app:layout_constraintTop_toTopOf="@+id/TextViewDateTo" />
 

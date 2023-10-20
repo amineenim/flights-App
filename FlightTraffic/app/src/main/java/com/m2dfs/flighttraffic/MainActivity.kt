@@ -26,6 +26,14 @@ class MainActivity : AppCompatActivity() {
         fromDateTextView.setOnClickListener { showDatePickerDialog(FlightViewModel.DateType.FROM) }
         toDateTextView.setOnClickListener { showDatePickerDialog(FlightViewModel.DateType.TO) }
 
+        flightViewModel.getFromCalendarLiveData().observe(this) {
+            fromDateTextView.text = Utils.dateToString(it.time)
+        }
+
+        flightViewModel.getToCalendarLiveData().observe(this) {
+            toDateTextView.text = Utils.dateToString(it.time)
+        }
+
         //Liste aéroports
         val spinner = findViewById<Spinner>(R.id.airportSpinner)
         flightViewModel.getAirportLiveData().observe(this) {

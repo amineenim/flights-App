@@ -2,6 +2,6 @@
     <string name="app_name">Flight Traffic</string>
     <string name="title">Flight Traffic</string>
     <string name="rechercher_vol">Rechercher votre vol</string>
-    <string name="de">De</string>
-    <string name="a">A</string>
+    <string name="du">Du</string>
+    <string name="au">Au</string>
 </resources>
