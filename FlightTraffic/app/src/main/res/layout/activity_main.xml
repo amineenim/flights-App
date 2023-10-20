@@ -51,7 +51,7 @@
         android:background="#03A9F4"
         android:backgroundTint="#03A9F4"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <TextView
         android:id="@+id/textView"
@@ -93,27 +93,18 @@
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="380dp"
-        android:layout_height="352dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewDateTo"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/flight" />
-
     <TextView
         android:id="@+id/TextViewDateFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ems="10"
+        android:gravity="center"
         android:text="01/01/2023"
+        android:textSize="18sp"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/airportSpinner" />
 
@@ -123,9 +114,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:gravity="center"
         android:text="01/01/2023"
+        android:textSize="18sp"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/TextViewDateFrom" />
 
@@ -135,6 +129,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/du"
+        android:textSize="20sp"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="@+id/TextViewDateFrom"
         app:layout_constraintEnd_toStartOf="@+id/TextViewDateFrom"
         app:layout_constraintTop_toTopOf="@+id/TextViewDateFrom" />
@@ -143,20 +139,45 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/au"
+        android:text="Au"
+        android:textSize="20sp"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="@+id/TextViewDateTo"
         app:layout_constraintEnd_toStartOf="@+id/TextViewDateTo"
         app:layout_constraintTop_toTopOf="@+id/TextViewDateTo" />
 
     <Spinner
         android:id="@+id/airportSpinner"
-        android:layout_width="0dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/TextViewDateFrom"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="340dp"
+        android:layout_height="296dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:srcCompat="@drawable/flight" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Envoyer"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewDateTo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
