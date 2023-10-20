@@ -48,6 +48,15 @@ class MainActivity : AppCompatActivity() {
 
         val currentCalendar = if (dateType == FlightViewModel.DateType.FROM) flightViewModel.getFromCalendarLiveData().value else flightViewModel.getToCalendarLiveData().value
 
-        //TODO
+        currentCalendar?.let { calendar ->
+            val datePickerDialog = DatePickerDialog(
+                    this,
+                    dateSetListener,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
+            datePickerDialog.show()
+        }
     }
 }
