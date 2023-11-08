@@ -33,7 +33,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun updateCalendarLiveData(dateType: DateType, calendar: Calendar) {
-        if(dateType == DateType.FROM) fromCalendarLiveData.value = calendar
+        if(dateType == DateType.FROM) {
+            fromCalendarLiveData.value = calendar
+            if (toCalendarLiveData.value!! < fromCalendarLiveData.value!!
+                || toCalendarLiveData.value!!.timeInMillis > fromCalendarLiveData.value!!.timeInMillis + 604800000L) {
+                toCalendarLiveData.value = calendar
+            }
+        }
         else toCalendarLiveData.value = calendar
     }
 

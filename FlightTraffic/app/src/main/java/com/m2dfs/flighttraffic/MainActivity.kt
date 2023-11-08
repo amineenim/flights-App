@@ -45,9 +45,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getAirportLiveData().observe(this) {
             spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
         }
-
-        //Exemple requête
-        //mainViewModel.doRequest(false, 0)
     }
 
     private fun showDatePickerDialog(dateType: MainViewModel.DateType) {
@@ -70,6 +67,16 @@ class MainActivity : AppCompatActivity() {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
                 )
+            if (dateType == MainViewModel.DateType.FROM) {
+                datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+            }
+            else {
+                mainViewModel.getFromCalendarLiveData().observe(this) { calendar ->
+                    val minDate = calendar.timeInMillis
+                    datePickerDialog.datePicker.minDate = minDate
+                    datePickerDialog.datePicker.maxDate = minDate + 604800000
+                }
+            }
             datePickerDialog.show()
         }
     }
