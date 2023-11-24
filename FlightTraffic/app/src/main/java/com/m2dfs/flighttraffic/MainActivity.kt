@@ -2,13 +2,18 @@ package com.m2dfs.flighttraffic
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import java.util.Calendar
 
@@ -45,6 +50,27 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getAirportLiveData().observe(this) {
             spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
         }
+
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+
+
+        mainViewModel.apiResponse.observe(this, Observer {
+            response ->
+            run {
+                when (response) {
+                    is ApiResponse.Success -> {
+                        // ouvrir une nouvelle activite avec les donnees
+                        progressBar.visibility = View.GONE
+                        val intent = Intent(this, FlightsListActivity::class.java )
+                        startActivity(intent)
+                    }
+                    is ApiResponse.Error -> {
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this, response.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 
     private fun showDatePickerDialog(dateType: MainViewModel.DateType) {
@@ -84,6 +110,8 @@ class MainActivity : AppCompatActivity() {
     private fun submitForm() {
         val isArrival = findViewById<Switch>(R.id.switch1).isChecked
         val airportIndex = findViewById<Spinner>(R.id.airportSpinner).selectedItemPosition
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
         mainViewModel.doRequest(isArrival, airportIndex)
     }
 }
