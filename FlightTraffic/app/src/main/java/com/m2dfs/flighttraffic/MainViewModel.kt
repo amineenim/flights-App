@@ -96,7 +96,7 @@ class MainViewModel(private val flightsViewModel : FlightsListViewModel) : ViewM
                 result?.let{
                     _apiResponse.postValue(ApiResponse.Success(it))
                     // set data in the flightsListViewModel
-                    flightsViewModel.setFlightsData(it)
+                    //flightsViewModel.set(it)
                 }
             }catch(e : HttpException){
                 if(e.code() == 404){
