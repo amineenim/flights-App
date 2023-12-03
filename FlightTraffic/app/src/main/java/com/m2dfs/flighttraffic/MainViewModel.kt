@@ -1,6 +1,7 @@
 package com.m2dfs.flighttraffic
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class MainViewModel() : ViewModel() {
     private val airportList = MutableLiveData(Utils.generateAirportList())
     private val _apiResponse = MutableLiveData<ApiResponse>()
     val apiResponse: LiveData<ApiResponse> get() = _apiResponse
+    val toastLiveData = MutableLiveData<String>()
 
 
     fun getFromCalendarLiveData(): LiveData<Calendar> {
@@ -39,12 +41,52 @@ class MainViewModel() : ViewModel() {
     fun updateCalendarLiveData(dateType: DateType, calendar: Calendar) {
         if(dateType == DateType.FROM) {
             fromCalendarLiveData.value = calendar
-            if (toCalendarLiveData.value!! < fromCalendarLiveData.value!!
-                || toCalendarLiveData.value!!.timeInMillis > fromCalendarLiveData.value!!.timeInMillis + 604800000L) {
-                toCalendarLiveData.value = calendar
+            /*Si date FROM > aujourd'hui :
+                    date FROM = aujourd'hui
+              Si date FROM > date TO :
+                    date TO = date FROM
+              Sinon si date FROM < date TO - 7j :
+                    date TO = date FROM + 7j
+            */
+            if (fromCalendarLiveData.value!!.compareTo(Calendar.getInstance()) > 0) {
+                fromCalendarLiveData.value = Calendar.getInstance()
+                toastLiveData.value = "Les vols futurs ne sont pas pris en charge."
+            }
+            if (fromCalendarLiveData.value!! > toCalendarLiveData.value!!) {
+                toCalendarLiveData.value = fromCalendarLiveData.value
+                toastLiveData.value = "La première date doit précéder la seconde date."
+            }
+            else if (fromCalendarLiveData.value!!.timeInMillis < toCalendarLiveData.value!!.timeInMillis - 604800000L) {
+                val newToDate = fromCalendarLiveData.value!!.clone() as Calendar
+                newToDate.add(Calendar.DAY_OF_MONTH,7)
+                toCalendarLiveData.value = newToDate
+                toastLiveData.value = "L'intervalle de recherche ne peut pas dépasser une semaine."
             }
         }
-        else toCalendarLiveData.value = calendar
+        else {
+            toCalendarLiveData.value = calendar
+            /*Si date TO > aujourd'hui :
+                    date TO = aujourd'hui
+              Si date FROM > date TO :
+                    date FROM = date TO
+              Sinon si date TO < date FROM + 7j :
+                    date FROM = date TO - 7j
+            */
+            if (toCalendarLiveData.value!!.compareTo(Calendar.getInstance()) > 0) {
+                toCalendarLiveData.value = Calendar.getInstance()
+                toastLiveData.value = "Les vols futurs ne sont pas pris en charge."
+            }
+            if (toCalendarLiveData.value!! < fromCalendarLiveData.value!!) {
+                fromCalendarLiveData.value = toCalendarLiveData.value
+                toastLiveData.value = "La première date doit précéder la seconde date."
+            }
+            else if (toCalendarLiveData.value!!.timeInMillis > fromCalendarLiveData.value!!.timeInMillis + 604800000L) {
+                val newFromDate = toCalendarLiveData.value!!.clone() as Calendar
+                newFromDate.add(Calendar.DAY_OF_MONTH,-7)
+                fromCalendarLiveData.value = newFromDate
+                toastLiveData.value = "L'intervalle de recherche ne peut pas dépasser une semaine."
+            }
+        }
     }
 
     fun doRequest(isArrival: Boolean, selectedAirportIndex: Int) {

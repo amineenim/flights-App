@@ -71,6 +71,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        mainViewModel.toastLiveData.observe(this, Observer{message ->
+            message?.let { showToast(it) }
+        })
     }
 
     private fun showDatePickerDialog(dateType: MainViewModel.DateType) {
@@ -93,16 +97,6 @@ class MainActivity : AppCompatActivity() {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
                 )
-            if (dateType == MainViewModel.DateType.FROM) {
-                datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-            }
-            else {
-                mainViewModel.getFromCalendarLiveData().observe(this) { calendar ->
-                    val minDate = calendar.timeInMillis
-                    datePickerDialog.datePicker.minDate = minDate
-                    datePickerDialog.datePicker.maxDate = minDate + 604800000
-                }
-            }
             datePickerDialog.show()
         }
     }
@@ -125,5 +119,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("AIRPORT_ICAO",icao)
 
         startActivity(intent)
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }
