@@ -108,10 +108,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun submitForm() {
+        val begin = mainViewModel.getFromCalendarLiveData().value!!.timeInMillis / 1000
+        val end = mainViewModel.getToCalendarLiveData().value!!.timeInMillis / 1000
         val isArrival = findViewById<Switch>(R.id.switch1).isChecked
         val airportIndex = findViewById<Spinner>(R.id.airportSpinner).selectedItemPosition
+        val airport = mainViewModel.getAirportLiveData().value!![airportIndex]
+        val icao = airport.icao
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-        mainViewModel.doRequest(isArrival, airportIndex)
+        //mainViewModel.doRequest(isArrival, airportIndex)
+        val intent = Intent(this, FlightsListActivity::class.java)
+
+        intent.putExtra("FROM_TIMESTAMP",begin)
+        intent.putExtra("TO_TIMESTAMP",end)
+        intent.putExtra("IS_ARRIVAL",isArrival)
+        intent.putExtra("AIRPORT_ICAO",icao)
+
+        startActivity(intent)
     }
 }

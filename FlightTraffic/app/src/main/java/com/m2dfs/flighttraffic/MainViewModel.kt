@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.util.Calendar
 
-class MainViewModel(private val flightsViewModel : FlightsListViewModel) : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     private val fromCalendarLiveData = MutableLiveData(Calendar.getInstance())
     private val toCalendarLiveData = MutableLiveData(Calendar.getInstance())
