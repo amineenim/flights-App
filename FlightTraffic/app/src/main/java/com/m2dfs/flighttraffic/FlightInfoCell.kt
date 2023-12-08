@@ -1,18 +1,21 @@
 package com.m2dfs.flighttraffic
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
+import java.util.*
 
+@SuppressLint("ViewConstructor")
 class FlightInfoCell : LinearLayout {
 
-    lateinit var depDateTextView: TextView
+    //lateinit var depDateTextView: TextView
     lateinit var depAirportTextView: TextView
     lateinit var depHourTextView: TextView
-    lateinit var arrDateTextView: TextView
+    //lateinit var arrDateTextView: TextView
     lateinit var arrAirportTextView: TextView
     lateinit var arrHourTextView: TextView
     lateinit var flightDurationTextView: TextView
@@ -37,31 +40,30 @@ class FlightInfoCell : LinearLayout {
 
     private fun bindViews() {
         // make the find view by ids for your view
-        depDateTextView = findViewById(R.id.departureTime)
-        depAirportTextView= findViewById(R.id.departureAireport)
-        depHourTextView= findViewById(R.id.departureHour)
-        arrDateTextView= findViewById(R.id.arrivalTime)
-        arrAirportTextView= findViewById(R.id.arrivalAireport)
-        arrHourTextView= findViewById(R.id.arrivalHour)
-        flightDurationTextView= findViewById(R.id.flightDuration)
-        flightNameTextView= findViewById(R.id.flightId)
+        depAirportTextView= findViewById(R.id.departLabel)
+        depHourTextView= findViewById(R.id.heureDepartLabel)
+        arrAirportTextView= findViewById(R.id.arriverLabel)
+        arrHourTextView= findViewById(R.id.heureArriverLabel)
+        flightDurationTextView= findViewById(R.id.flyTime)
+        flightNameTextView= findViewById(R.id.flyNumber)
     }
 
     fun bindData(flight: FlightModel) {
         Log.d("TAG", "message")
         //fill your views
-        depDateTextView.text = flight.firstSeen.toString()
+        depHourTextView.text = "%02d:%02d".format(Date(flight.firstSeen * 1000).hours, Date(flight.firstSeen * 1000).minutes)
+        arrHourTextView.text = "%02d:%02d".format(Date(flight.lastSeen * 1000).hours, Date(flight.lastSeen * 1000).minutes)
         depAirportTextView.text = flight.estDepartureAirport
         //depHourTextView.text =
-        flightNameTextView.text = flight.callsign
-        flightDurationTextView.text = (flight.lastSeen - flight.firstSeen).toString()
-        arrDateTextView.text = flight.lastSeen.toString()
+        flightNameTextView.text = "Fly number : " + flight.callsign
+        flightDurationTextView.text = "Fly time : " + "%02d:%02d".format(Date(flight.lastSeen * 1000 - flight.firstSeen * 1000).hours, Date(flight.lastSeen * 1000 - flight.firstSeen * 1000).minutes)
+        //arrDateTextView.text = flight.lastSeen.toString()
         arrAirportTextView.text = flight.estArrivalAirport
         //depHourTextView.text =
     }
 
     private fun initLayout() {
-        LayoutInflater.from(context).inflate(R.layout.flight_list_row, this, true)
+        LayoutInflater.from(context).inflate(R.layout.flight_cell, this, true)
         bindViews()
     }
 

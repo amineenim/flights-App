@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     is ApiResponse.Success -> {
                         // ouvrir une nouvelle activite avec les donnees
                         progressBar.visibility = View.GONE
-                        val intent = Intent(this, FlightsListActivity::class.java )
+                        val intent = Intent(this, FlightListActivity::class.java )
                         startActivity(intent)
                     }
                     is ApiResponse.Error -> {
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
         //mainViewModel.doRequest(isArrival, airportIndex)
-        val intent = Intent(this, FlightsListActivity::class.java)
+        val intent = Intent(this, FlightListActivity::class.java)
 
         intent.putExtra("FROM_TIMESTAMP",begin)
         intent.putExtra("TO_TIMESTAMP",end)
@@ -125,3 +125,4 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }
+
