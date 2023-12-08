@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/information_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E4E5E9"
+    tools:context=".FlightMapFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="367dp"
+        android:layout_height="217dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/tanAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleInformation">
+
+        <TextView
+            android:id="@+id/flyTimeInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1h30"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toStartOf="@+id/view"
+            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintTop_toTopOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/departLabelInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="32dp"
+            android:text="BIA"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/heureDepartLabelInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13:30"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/departLabelInformation"
+            app:layout_constraintStart_toStartOf="@+id/departLabelInformation"
+            app:layout_constraintTop_toBottomOf="@+id/departLabelInformation" />
+
+        <TextView
+            android:id="@+id/callSignInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27dp"
+            android:layout_marginBottom="18dp"
+            android:text="Fly Number :"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/heureArriverLabelInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14:30"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/arriverLabelInformation"
+            app:layout_constraintEnd_toEndOf="@+id/arriverLabelInformation"
+            app:layout_constraintStart_toStartOf="@+id/arriverLabelInformation" />
+
+        <TextView
+            android:id="@+id/arriverLabelInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="17dp"
+            android:text="ORY"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="57dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="14dp"
+            android:background="#707070"
+            android:rotation="25"
+            app:layout_constraintBottom_toBottomOf="@+id/heureDepartLabelInformation"
+            app:layout_constraintStart_toEndOf="@+id/heureDepartLabelInformation"
+            app:layout_constraintTop_toBottomOf="@+id/departLabelInformation"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="57dp"
+            android:layout_height="2dp"
+            android:layout_marginEnd="14dp"
+            android:background="#707070"
+            android:rotation="25"
+            app:layout_constraintBottom_toTopOf="@+id/arriverLabelInformation"
+            app:layout_constraintEnd_toStartOf="@+id/heureArriverLabelInformation"
+            app:layout_constraintTop_toTopOf="@+id/heureArriverLabelInformation"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/titleInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Informations Du Vol"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="-26dp"
+        android:src="@drawable/airplane_flying"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="360dp"
+        android:layout_height="330dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+    <Button
+        android:id="@+id/plusInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#E4E5E9"
+        android:text="Plus d'information sur l'avion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
