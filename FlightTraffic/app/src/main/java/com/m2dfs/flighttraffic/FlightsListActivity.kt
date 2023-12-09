@@ -27,7 +27,7 @@ class FlightsListActivity : AppCompatActivity() {
         Log.i("heere", "passed here !")
 
         val isTablet = findViewById<FragmentContainerView>(R.id.fragment_map_container) != null
-        viewModel.getClickedFlightLiveData().observe(this, Observer {
+        //viewModel.getClickedFlightLiveData().observe(this, Observer {
             // Afficher le bon vol
             Log.i("haha", "passed here ")
             //Si c'est le telephone alors on remplace le fragment de list par la map
@@ -36,10 +36,10 @@ class FlightsListActivity : AppCompatActivity() {
                 //remplacer le fragment
                 Log.i("heeere","test for mobile")
                 val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_list_container, FlightMapFragment.newInstance("", ""))
+                transaction.replace(R.id.fragment_list_container, FlightListFragment.newInstance("", ""))
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
-        })
+        //})
     }
 }
