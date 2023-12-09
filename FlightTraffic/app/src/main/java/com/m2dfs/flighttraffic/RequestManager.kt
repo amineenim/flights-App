@@ -6,12 +6,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.math.log
 
-/**
- * Created by sergio on 04/03/2021
- * All rights reserved GoodBarber
- */
 class RequestManager {
 
     interface RequestListener {
@@ -20,13 +15,9 @@ class RequestManager {
     }
 
     companion object {
-        val API_BASE_URL = "https://opensky-network.org/api/flights/"
-        val FLIGHT_DEPARTURE_ENDPOINT = "departure"
-        val FLIGHT_ARRIVAL_ENDPOINT = "arrival"
-
         fun get(
             sourceUrl: String?,
-            params: Map<String, String>?
+            params: HashMap<String, String>
         ): String? {
             val result = StringBuilder()
             var finalSourceUrl = sourceUrl
@@ -77,7 +68,7 @@ class RequestManager {
             params: Map<String, String>?
         ): String? {
             val result = StringBuilder()
-            var finalSourceUrl = API_BASE_URL + sourceUrl
+            var finalSourceUrl = sourceUrl
             try {
                 //Params
                 var c = 0

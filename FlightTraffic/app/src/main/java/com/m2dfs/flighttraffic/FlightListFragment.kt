@@ -1,6 +1,7 @@
 package com.m2dfs.flighttraffic
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class FlightListFragment : Fragment(), FlightListAdapter.OnCellClickListener {
+class FlightListFragment : Fragment(), FlightsAdapter.OnCellClickListener {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -32,15 +33,15 @@ class FlightListFragment : Fragment(), FlightListAdapter.OnCellClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(FlightsListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[FlightsListViewModel::class.java]
 
         viewModel.getFlightListLiveData().observe(viewLifecycleOwner, Observer {
             //findViewById<TextView>(R.id.textView).text = it.toString()
-
+            Log.d("FlightListFragment", "Flight list size: ${it.size}")
             //Récupérer le recyclerView
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
             // Attacher un Adapter
-            recyclerView.adapter = FlightListAdapter(it, this)
+            recyclerView.adapter = FlightsAdapter(it, this)
             // Attacher un LayoutManager
             recyclerView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         })

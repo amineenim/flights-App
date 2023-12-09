@@ -60,7 +60,7 @@ class FlightMapFragment : Fragment(), OnMapReadyCallback {
         mapView = view.findViewById<MapView>(R.id.mapView)
         mapView!!.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(FlightsListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[FlightsListViewModel::class.java]
         viewModel.getClickedFlightLiveData().observe(viewLifecycleOwner, Observer {
             view.visibility = View.VISIBLE
             view.isEnabled = true
@@ -77,7 +77,7 @@ class FlightMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         viewModel.getPositionOfClickedFlight()
 
-        viewModel.getFlightTrackListLiveData().observe(viewLifecycleOwner) {
+        viewModel.getFlightTrackListLiveData().observe(viewLifecycleOwner) { it ->
             val polylineOptions = PolylineOptions()
             var firstItem = true
             var latitude: Double? = null

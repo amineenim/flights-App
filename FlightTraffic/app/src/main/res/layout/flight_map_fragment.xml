@@ -154,7 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="#E4E5E9"
-        android:text="Plus d'information sur l'avion"
+        android:text="Plus d'informations sur l'avion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapView" />

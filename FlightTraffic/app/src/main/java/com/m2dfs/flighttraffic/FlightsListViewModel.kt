@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,10 +71,11 @@ class FlightsListViewModel : ViewModel() {
     fun doRequest(){
         viewModelScope.launch {
             var key = HashMap<String, String>()
-            key.put("begin", begin.toString())
-            key.put("end", end.toString())
-            key.put("airport", icao)
+            key["begin"] = begin.toString()
+            key["end"] = end.toString()
+            key["airport"] = icao
 
+            Log.i("kan", "hnaa")
             val result = withContext(Dispatchers.IO) {
                 if (isArrival){
                     RequestManager.getSuspended(RequestManager.FLIGHT_ARRIVAL_ENDPOINT, key)
@@ -84,7 +86,9 @@ class FlightsListViewModel : ViewModel() {
 
             if (result != null) {
                 Log.i("Result", result)
+                Log.i("daz", "hnaa")
                 var flightList = ArrayList<FlightModel>()
+                Log.i("hello", "kan hna")
                 val jsonElement = JsonParser.parseString(result)
                 if(jsonElement.isJsonArray){
                     val jsonArray = jsonElement.asJsonArray
@@ -95,6 +99,9 @@ class FlightsListViewModel : ViewModel() {
                 } else {
                     Log.i("jsonparse", "there is an issue with parsing the json into an array")
                 }
+            }else{
+                Log.i("taktak", "result is null")
+                // detruire cette activite et revenir sur la main avec un Toast
             }
         }
     }
@@ -111,9 +118,10 @@ class FlightsListViewModel : ViewModel() {
 
             if (result != null) {
                 Log.i("Result", result)
-                val parser = JsonParser()
-                val jsonElement = parser.parse(result)
-                flightTrackListLiveData.value = Gson().fromJson(jsonElement, FlightTrackModel::class.java)
+                val gson = Gson()
+                val jsonElement = gson.fromJson(result, JsonElement::class.java)
+                flightTrackListLiveData.value = gson.fromJson(jsonElement, FlightTrackModel::class.java)
+
             }
         }
     }
@@ -131,9 +139,11 @@ class FlightsListViewModel : ViewModel() {
 
             if (result != null) {
                 Log.i("Result", result)
-                val parser = JsonParser()
-                val jsonElement = parser.parse(result)
-                flightStateListLiveData.value = Gson().fromJson(jsonElement, FightStateModelArray::class.java)
+
+                val gson = Gson()
+                val jsonElement = gson.fromJson(result, JsonElement::class.java)
+
+                flightStateListLiveData.value = gson.fromJson(jsonElement, FightStateModelArray::class.java)
             } else {
                 flightStateListLiveData.value = null
             }
@@ -145,9 +155,9 @@ class FlightsListViewModel : ViewModel() {
         viewModelScope.launch {
             var key = HashMap<String, String>()
 
-            key.put("icao24", clickedFlightLiveData.value!!.icao24)
-            key.put("end", ((Date().time / 1000) + 86400 ).toString())
-            key.put("begin", ((Date().time / 1000) - 86400).toString())
+            key["icao24"] = clickedFlightLiveData.value!!.icao24
+            key["end"] = ((Date().time / 1000) + 86400 ).toString()
+            key["begin"] = ((Date().time / 1000) - 86400).toString()
             //key.put("icao24", "040141")
 
             val result = withContext(Dispatchers.IO) {
@@ -156,18 +166,23 @@ class FlightsListViewModel : ViewModel() {
 
             if (result != null) {
                 Log.i("Result", result)
-                val parser = JsonParser()
-                val jsonElement = parser.parse(result)
+
+                val jsonElement = JsonParser.parseString(result)
                 var flightList = ArrayList<FlightModel>()
-                for (flyobject in jsonElement.asJsonArray){
-                    flightList.add(Gson().fromJson(flyobject.asJsonObject, FlightModel::class.java))
+                if(jsonElement.isJsonArray){
+                    val jsonArray = jsonElement.asJsonArray
+                    for (flyobject in jsonArray){
+                        flightList.add(Gson().fromJson(flyobject.asJsonObject, FlightModel::class.java))
+                    }
+                }else{
+                    Log.d("jsonissue", "the result is not array of json")
                 }
 
                 System.out.println((Date().time / 1000))
                 flightList.forEach() { flightModel ->
                     if (flightModel.firstSeen < (Date().time / 1000)
                         && flightModel.lastSeen + 60 > (Date().time / 1000)) {
-                        System.out.println("here")
+                        println("here")
                         flightModelStateLiveData.value = flightModel
                     }
                 }

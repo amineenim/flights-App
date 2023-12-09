@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), DialogAirportChoice.DialogAirportChoic
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, FlightListActivity::class.java)
+            val intent = Intent(this, FlightsListActivity::class.java)
             intent.putExtra("BEGIN", begin)
             intent.putExtra("END", end)
             intent.putExtra("IS_ARRIVAL", isArrival)
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), DialogAirportChoice.DialogAirportChoic
 
     }
 
-    //https://gist.github.com/codinginflow/11e5acb69a91db8f2be0f8e495505d12
+
     fun openAirportChoiceDialog() {
         val airportChoice = DialogAirportChoice()
         airportChoice.show(supportFragmentManager, "example dialog")

@@ -20,7 +20,7 @@
             android:value="AIzaSyDO_CxtIODSqWLe_nPJV-0wQlWxX9t-3v4">
         </meta-data>
         <activity
-            android:name=".FlightListActivity"
+            android:name=".FlightsListActivity"
             android:exported="false"
             android:label="@string/title_activity_flights_list"
             android:theme="@style/Theme.FlightTraffic" />
