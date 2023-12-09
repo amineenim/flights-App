@@ -12,16 +12,9 @@ import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.os.Build
+import androidx.annotation.RequiresApi
 
-/**
- * Created by sergio on 07/11/2021
- * All rights reserved GoodBarber
- *
- * TOMAKE this work put this dependencies in the build.gradle:
- *
- *     implementation 'commons-io:commons-io:2.4'
- *     implementation 'com.google.code.gson:gson:2.8.6'
- */
 
 const val TAG: String = "Utils"
 
@@ -192,6 +185,13 @@ class Utils private constructor() {
                     duration.append("0").append(minute).append("min").toString()
                 } else duration.append(minute).append("min").toString()
             }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun dateFormatterCustom(date: Date, pattern: String = "yyyy-MM-dd"): String{
+            //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+            val simpleDateFormat = SimpleDateFormat(pattern)
+            return simpleDateFormat.format(date)
         }
     }
 }

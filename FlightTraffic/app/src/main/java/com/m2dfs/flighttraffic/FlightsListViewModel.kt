@@ -66,6 +66,7 @@ class FlightsListViewModel : ViewModel() {
             field = value
         }
 
+
     fun doRequest(){
         viewModelScope.launch {
             var key = HashMap<String, String>()
@@ -83,14 +84,17 @@ class FlightsListViewModel : ViewModel() {
 
             if (result != null) {
                 Log.i("Result", result)
-                val parser = JsonParser()
-                val jsonElement = parser.parse(result)
                 var flightList = ArrayList<FlightModel>()
-                for (flyobject in jsonElement.asJsonArray){
-                    flightList.add(Gson().fromJson(flyobject.asJsonObject, FlightModel::class.java))
+                val jsonElement = JsonParser.parseString(result)
+                if(jsonElement.isJsonArray){
+                    val jsonArray = jsonElement.asJsonArray
+                    for (flyobject in jsonArray){
+                        flightList.add(Gson().fromJson(flyobject.asJsonObject, FlightModel::class.java))
+                    }
+                    flightListLiveData.value = flightList
+                } else {
+                    Log.i("jsonparse", "there is an issue with parsing the json into an array")
                 }
-
-                flightListLiveData.value = flightList
             }
         }
     }
@@ -98,8 +102,8 @@ class FlightsListViewModel : ViewModel() {
     fun getPositionOfClickedFlight(){
         viewModelScope.launch {
             var key = HashMap<String, String>()
-            key.put("time", clickedFlightLiveData.value!!.firstSeen.toString())
-            key.put("icao24", clickedFlightLiveData.value!!.icao24)
+            key["time"] = clickedFlightLiveData.value!!.firstSeen.toString()
+            key["icao24"] = clickedFlightLiveData.value!!.icao24
 
             val result = withContext(Dispatchers.IO) {
                 RequestManager.getSuspended("https://opensky-network.org/api/tracks/all", key)
@@ -118,7 +122,7 @@ class FlightsListViewModel : ViewModel() {
         viewModelScope.launch {
             var key = HashMap<String, String>()
             //key.put("time", Date().time.toString())
-            key.put("icao24", clickedFlightLiveData.value!!.icao24)
+            key["icao24"] = clickedFlightLiveData.value!!.icao24
             //key.put("icao24", "040141")
 
             val result = withContext(Dispatchers.IO) {

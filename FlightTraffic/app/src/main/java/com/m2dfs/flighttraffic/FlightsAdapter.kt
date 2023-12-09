@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class FlightListAdapter(val flightList: List<FlightModel>, val cellClickListener: OnCellClickListener) :
-    RecyclerView.Adapter<FlightListAdapter.FlightListCellViewHolder>() {
+class FlightListAdapter(val flightList: List<FlightModel>, val cellClickListener: OnCellClickListener) : RecyclerView.Adapter<FlightListAdapter.FlightListCellViewHolder>() {
 
     interface OnCellClickListener {
         fun onCellClicked(flightModel: FlightModel)
@@ -31,7 +30,7 @@ class FlightListAdapter(val flightList: List<FlightModel>, val cellClickListener
 
         val flight = flightList[position]
         val cell = holder.itemView as FlightInfoCell
-        cell.setBackgroundColor(if (position % 2 == 0) Color.YELLOW else Color.GRAY)
+        //cell.setBackgroundColor(if (position % 2 == 0) Color.YELLOW else Color.GRAY)
         cell.bindData(flight)
         cell.setOnClickListener {
             cellClickListener.onCellClicked(flight)
