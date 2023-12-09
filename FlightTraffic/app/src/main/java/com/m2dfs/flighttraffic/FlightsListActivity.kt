@@ -3,6 +3,7 @@ package com.m2dfs.flighttraffic
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -12,7 +13,7 @@ class FlightsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.flight_list_fragment)
+        setContentView(R.layout.flights_list)
 
         this.viewModel = ViewModelProvider(this)[FlightsListViewModel::class.java]
         Log.i("debug", intent.getLongExtra("BEGIN", 0).toString())
@@ -25,8 +26,7 @@ class FlightsListActivity : AppCompatActivity() {
         this.viewModel.doRequest()
         Log.i("heere", "passed here !")
 
-        val isTablet = false
-            //findViewById<FragmentContainerView>(R.id.fragment_map_container) != null
+        val isTablet = findViewById<FragmentContainerView>(R.id.fragment_map_container) != null
         viewModel.getClickedFlightLiveData().observe(this, Observer {
             // Afficher le bon vol
             Log.i("haha", "passed here ")
