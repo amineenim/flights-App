@@ -76,9 +76,9 @@ class FlightsListViewModel : ViewModel() {
 
             val result = withContext(Dispatchers.IO) {
                 if (isArrival){
-                    RequestManager.getSuspended("https://opensky-network.org/api/flights/arrival", key)
+                    RequestManager.getSuspended(RequestManager.FLIGHT_ARRIVAL_ENDPOINT, key)
                 } else {
-                    RequestManager.getSuspended("https://opensky-network.org/api/flights/departure", key)
+                    RequestManager.getSuspended(RequestManager.FLIGHT_DEPARTURE_ENDPOINT, key)
                 }
             }
 
