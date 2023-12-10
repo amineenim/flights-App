@@ -64,9 +64,10 @@
 
         <Switch
             android:id="@+id/switchSelection"
-            android:layout_width="108dp"
+            android:layout_width="120dp"
             android:layout_height="48dp"
             android:text="Départ"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

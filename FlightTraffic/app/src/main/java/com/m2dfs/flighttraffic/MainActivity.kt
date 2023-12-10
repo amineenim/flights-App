@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), DialogAirportChoice.DialogAirportChoic
 
         switchSelection.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                switchSelection.text = "Arriver"
+                switchSelection.text = "Arrivée"
                 this.isArrival = true
             } else {
                 switchSelection.text = "Départ"
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), DialogAirportChoice.DialogAirportChoic
 
             //Security
             if (this.chooseAirport == null){
-                val toast = Toast.makeText(this, "Veuillez choisir un aeroport", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(this, "Veuillez choisir un aéroport", Toast.LENGTH_SHORT)
                 toast.show()
                 return@setOnClickListener
             }
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), DialogAirportChoice.DialogAirportChoic
             }
 
             if ((end - begin) >= 604800 ){
-                val toast = Toast.makeText(this, "7j d'écart maximum", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(this, "7 jours d'écart maximum", Toast.LENGTH_SHORT)
                 toast.show()
                 return@setOnClickListener
             }
