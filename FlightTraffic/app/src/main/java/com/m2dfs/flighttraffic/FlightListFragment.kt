@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,5 +71,25 @@ class FlightListFragment : Fragment(), FlightsAdapter.OnCellClickListener {
 
     override fun onCellClicked(flightModel: FlightModel) {
         viewModel.setClickedFlightLiveData(flightModel)
+        // Masquer le fragment actuel
+        view?.visibility = View.GONE
+        view?.isEnabled = false
+
+        val isTablet = view?.findViewById<FragmentContainerView>(R.id.fragment_map_container) != null
+
+        // Si c'est un téléphone, remplacer le FlightListFragment par le FlightMapFragment
+        if (!isTablet) {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_list_container, FlightMapFragment.newInstance("", ""))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        } else {
+            // Si c'est une tablette, afficher le FlightMapFragment
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_map_container, FlightMapFragment.newInstance("", ""))
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
+
 }

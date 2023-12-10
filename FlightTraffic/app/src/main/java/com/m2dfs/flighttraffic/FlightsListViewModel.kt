@@ -113,7 +113,7 @@ class FlightsListViewModel : ViewModel() {
             key["icao24"] = clickedFlightLiveData.value!!.icao24
 
             val result = withContext(Dispatchers.IO) {
-                RequestManager.getSuspended("https://opensky-network.org/api/tracks/all", key)
+                RequestManager.getSuspended(RequestManager.TRACK_ENDPOINT, key)
             }
 
             if (result != null) {
@@ -134,7 +134,7 @@ class FlightsListViewModel : ViewModel() {
             //key.put("icao24", "040141")
 
             val result = withContext(Dispatchers.IO) {
-                RequestManager.getSuspended("https://opensky-network.org/api/states/all", key)
+                RequestManager.getSuspended(RequestManager.STATE_ENDPOINT, key)
             }
 
             if (result != null) {
@@ -161,7 +161,7 @@ class FlightsListViewModel : ViewModel() {
             //key.put("icao24", "040141")
 
             val result = withContext(Dispatchers.IO) {
-                RequestManager.getSuspended("https://opensky-network.org/api/flights/aircraft", key)
+                RequestManager.getSuspended(RequestManager.FLIGHT_AIRCRAFT_ENDPOINT, key)
             }
 
             if (result != null) {

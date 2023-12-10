@@ -20,9 +20,12 @@ class RequestManager {
     }
 
     companion object {
-        val API_BASE_URL = "https://opensky-network.org/api/flights/"
-        val FLIGHT_DEPARTURE_ENDPOINT = "departure"
-        val FLIGHT_ARRIVAL_ENDPOINT = "arrival"
+        val API_BASE_URL = "https://opensky-network.org/api/"
+        val FLIGHT_DEPARTURE_ENDPOINT = "flights/departure"
+        val FLIGHT_ARRIVAL_ENDPOINT = "flights/arrival"
+        val FLIGHT_AIRCRAFT_ENDPOINT = "flights/aircraft"
+        val STATE_ENDPOINT = "states/all"
+        val TRACK_ENDPOINT = "tracks/all"
 
         fun get(
             sourceUrl: String?,

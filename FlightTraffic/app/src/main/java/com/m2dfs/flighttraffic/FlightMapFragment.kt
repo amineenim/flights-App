@@ -40,6 +40,7 @@ class FlightMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val moreInformation = view.findViewById<Button>(R.id.plusInformation)
+        /*
         moreInformation.setOnClickListener {
             //change fragment
             val isPhone = view.findViewById<FragmentContainerView>(R.id.fragment_map_container) == null
@@ -55,6 +56,7 @@ class FlightMapFragment : Fragment(), OnMapReadyCallback {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+        */
         view.visibility = View.INVISIBLE
         view.isEnabled = false
         mapView = view.findViewById<MapView>(R.id.mapView)
